@@ -1,0 +1,42 @@
+<div class="product-details-body" *ngIf="product">
+
+    <div class="details-header">
+        <div class="details-header">
+            <h2>{{ product.name }}</h2>
+        </div>
+        <div class="details-header">
+            <button class="main-button"> EDIT
+            </button>
+            <button class="main-button" id="deleteButton"> DELETE
+            </button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="main-container">
+            <div class="details-container">
+
+                <p>Name: </p>
+                <p>{{ product.name }}</p>
+                <p>Category: </p>
+                <p>{{ product.category }}</p>
+                <p>Price: </p>
+                <p>{{ product.price }}</p>
+
+
+            </div>
+            <div class="image-container">
+                <img src="{{product.image}}">
+            </div>
+        </div>
+
+        <div class="details-container">
+            <p>Description: </p>
+            <p>{{ product.description }}</p>
+        </div>
+    </div>
+
+
+</div>
+<div *ngIf="!product">
+    <p>No product selected.</p>
+</div>

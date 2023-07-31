@@ -1,0 +1,46 @@
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+}
+
+.quantity-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.quantity-container input[type="number"] {
+  width: 50px;
+  text-align: center;
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 20px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
