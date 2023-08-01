@@ -1,0 +1,43 @@
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 30px;
+}
+
+.main-button {
+  border-radius: 10px;
+  margin-right: 10%;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  font-size: large;
+  align-self: center;
+}
+
+#deleteButton {
+  background-color: red;
+}
+
+.main-container {
+  display: flex;
+}
+
+.details-container {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 15% 80%;
+  font-size: larger;
+  word-wrap: break-word;
+  width: 70%;
+}
+
+.image-container {
+  width: 30%;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
