@@ -12,3 +12,14 @@ export interface OrderProduct {
     product: Product,
     quantity: number
 }
+
+export interface OrderProductID {
+    productId: string,
+    quantity: number
+}
+
+
+export interface Order {
+    customerId: string,
+    products: OrderProductID[]
+}

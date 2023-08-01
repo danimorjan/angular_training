@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product, OrderProduct } from 'src/app/modules/shared/types/products.types';
 
 @Component({
@@ -8,6 +8,9 @@ import { Product, OrderProduct } from 'src/app/modules/shared/types/products.typ
 })
 export class ShoppingCartDetailsViewComponent implements OnInit {
   @Input() products!: Product[]
+  @Output() onClickCheckoutButton: EventEmitter<OrderProduct[]> = new EventEmitter<OrderProduct[]>();
+  @Output() onClickRemoveButton: EventEmitter<string> = new EventEmitter<string>();
+
   orderProducts: OrderProduct[] = []
 
   ngOnInit() {
@@ -18,13 +21,9 @@ export class ShoppingCartDetailsViewComponent implements OnInit {
   }
 
   onRemoveButtonClick(orderProduct: OrderProduct) {
-    const index = this.orderProducts.indexOf(orderProduct);
-    if (index !== -1) {
-      this.orderProducts.splice(index, 1);
+    if (this.orderProducts.includes(orderProduct)) {
+      this.orderProducts.splice(this.orderProducts.indexOf(orderProduct), 1);
     }
-  }
-
-  onCheckoutButtonClick() {
-    console.log('Checkout button clicked!');
+    this.onClickRemoveButton.emit(orderProduct.product.id);
   }
 }

@@ -3,7 +3,7 @@
         <h2>Shopping Cart</h2>
     </div>
     <app-icon-button class="buttons-container" iconType="checkout"
-        (onClickButton)="onCheckoutButtonClick()"></app-icon-button>
+        (onClickButton)="onClickCheckoutButton.emit(orderProducts)"></app-icon-button>
 </div>
 
 <table>

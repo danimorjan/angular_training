@@ -5,9 +5,11 @@
             <h2>{{ product.name }}</h2>
         </div>
         <div class="details-header">
+            <button class="main-button" (click)="onClickBuyButton.emit(product)"> BUY
+            </button>
             <button class="main-button"> EDIT
             </button>
-            <button class="main-button" id="deleteButton"> DELETE
+            <button class="main-button" id="deleteButton" (click)="onClickDeletekButton.emit(product.id)"> DELETE
             </button>
         </div>
     </div>

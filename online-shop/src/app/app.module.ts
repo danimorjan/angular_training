@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './components/containers/product-list/product-list.component';
@@ -20,7 +20,8 @@ import { ShoppingCartModule } from './modules/shopping-cart/shopping-cart.module
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ShoppingCartModule
+    ShoppingCartModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
