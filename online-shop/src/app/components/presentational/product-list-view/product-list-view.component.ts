@@ -9,10 +9,19 @@ import { Product } from 'src/app/modules/shared/types/products.types';
 })
 export class ProductListViewComponent {
   @Input() products: Product[] | undefined;
-  
-  constructor(private router: Router) {}
+
+  constructor(private router: Router) { }
 
   navigateToShoppingCart(): void {
     this.router.navigate(['/shopping-cart']);
+  }
+
+  navigateToAddProduct(): void {
+    this.router.navigate(['/add-product']);
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }

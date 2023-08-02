@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from 'src/app/modules/shared/types/products.types';
 
 @Component({
@@ -10,4 +11,10 @@ export class ProductDetailsViewComponent {
   @Input() product: Product | undefined;
   @Output() onClickDeletekButton: EventEmitter<string> = new EventEmitter<string>();
   @Output() onClickBuyButton: EventEmitter<Product> = new EventEmitter<Product>();
+
+  constructor(private router: Router) { }
+
+  navigateToEdit(productId: string) {
+    this.router.navigate(['edit-product', productId]);
+  }
 }
