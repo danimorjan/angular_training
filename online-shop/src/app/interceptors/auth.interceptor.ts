@@ -18,6 +18,18 @@ export class AuthInterceptor implements HttpInterceptor {
         request: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
+
+        const tokenKey = 'token';
+        const token = localStorage.getItem(tokenKey);
+
+        if (token) {
+            request = request.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        }
+
         return next.handle(request).pipe(
             catchError((error: HttpErrorResponse) => {
                 if (error.status === 401) {

@@ -9,7 +9,7 @@ import { Product } from 'src/app/modules/shared/types/products.types';
   styleUrls: ['./products-form-view.component.scss']
 })
 export class ProductsFormViewComponent implements OnInit {
-  @Input() product!: Product;
+  @Input() product!: Product | null;
   @Output() updateProduct: EventEmitter<Product> = new EventEmitter<Product>();
 
   productForm: FormGroup = this.formBuilder.group({
@@ -30,7 +30,7 @@ export class ProductsFormViewComponent implements OnInit {
 
   saveChanges() {
     const updatedProduct: Product = {
-      id: this.product.id,
+      id: this.product?.id,
       ...this.productForm.value,
     };
     this.updateProduct.emit(updatedProduct);

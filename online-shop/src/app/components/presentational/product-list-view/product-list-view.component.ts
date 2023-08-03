@@ -8,7 +8,7 @@ import { Product } from 'src/app/modules/shared/types/products.types';
   styleUrls: ['./product-list-view.component.scss']
 })
 export class ProductListViewComponent {
-  @Input() products: Product[] | undefined;
+  @Input() products!: Product[] | null;
 
   constructor(private router: Router) { }
 

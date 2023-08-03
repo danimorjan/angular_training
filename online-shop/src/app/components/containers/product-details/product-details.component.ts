@@ -1,67 +1,49 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { takeWhile } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { take } from 'rxjs';
+import { deleteProduct, getProduct } from 'src/app/modules/shared/state/actions/product.actions';
+import { addToCart } from 'src/app/modules/shared/state/actions/shopping-cart.actions';
+import { selectAdminRole } from 'src/app/modules/shared/state/selectors/auth.selectors';
+import { selectCurrentProduct } from 'src/app/modules/shared/state/selectors/product.selectors';
+import { AppState } from 'src/app/modules/shared/state/state/app.state';
 import { Product } from 'src/app/modules/shared/types/products.types';
-import { ProductsService } from 'src/app/services/products.service';
 import { ShoppingCartService } from 'src/app/modules/shopping-cart/services/shopping-cart.service';
 
 @Component({
   selector: 'app-product-details',
-  template: `<app-product-details-view [product]="selectedProduct" 
+  template: `<app-product-details-view [product]="selectedProduct$ | async" 
   (onClickDeletekButton)="deleteProduct($event)"
   (onClickBuyButton)="addToCart($event)" ></app-product-details-view>`
 })
-export class ProductDetailsComponent implements OnInit, OnDestroy {
-  selectedProduct: Product | undefined;
-  alive = true;
+export class ProductDetailsComponent implements OnInit {
+  selectedProduct$ = this.store.select(selectCurrentProduct);
+  admin: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductsService,
     private shoppingCartService: ShoppingCartService,
-    private location: Location
+    private store: Store<AppState>
   ) { }
 
 
   ngOnInit() {
-    this.getProduct();
-  }
-
-  getProduct(): void {
+    this.store.select(selectAdminRole).pipe(take(1)).subscribe(data => this.admin = data)
     const productId = this.route.snapshot.paramMap.get('id')!;
-    this.productService.getProductById(productId)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe((product) => {
-        this.selectedProduct = product;
-      });
+    this.store.dispatch(getProduct({ productId: productId }))
   }
 
   deleteProduct(productId: string): void {
-    this.productService.deleteProduct(productId).pipe(
-      takeWhile(() => this.alive)
-    ).subscribe({
-      next: () => {
-        window.alert('Product deleted');
-        this.location.back();
-      },
-      error: (error) => {
-        window.alert(error);
-      }
-    });
+    if (this.admin) {
+      this.store.dispatch(deleteProduct({ productId: productId }));
+    }
+    else {
+      alert("You are not an admin")
+    }
   }
 
   addToCart(product: Product) {
-    if(this.shoppingCartService.addToCart(product)){
-      alert('Product added to cart!');
-    }
-    else{
-      alert('Product already in cart!');
-    }
-    
+    this.store.dispatch(addToCart({ product }))
   }
 
-  ngOnDestroy(): void {
-    this.alive = false;
-  }
 }

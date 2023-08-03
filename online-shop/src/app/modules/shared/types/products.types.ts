@@ -39,7 +39,12 @@ export interface Credentials {
 export type Role = "customer" | "admin" | "user"
 
 export interface User {
+    id: string;
     username: string;
     fullName: string;
-    reoles: Role[];
+    roles: Role[];
+}
+
+export interface Token {
+    access_token: string;
 }

@@ -1,57 +1,43 @@
-import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { takeWhile } from 'rxjs';
-import { Order, OrderProduct, Product } from 'src/app/modules/shared/types/products.types';
-import { OrderService } from 'src/app/services/order.service';
-import { ShoppingCartService } from '../../../services/shopping-cart.service';
+import { createOrder } from 'src/app/modules/shared/state/actions/shopping-cart.actions';
+import { selectCurrentUser } from 'src/app/modules/shared/state/selectors/auth.selectors';
+import { selectOrderProducts } from 'src/app/modules/shared/state/selectors/shopping-cart.selectors';
+import { AppState } from 'src/app/modules/shared/state/state/app.state';
+import { Order, OrderProduct, User } from 'src/app/modules/shared/types/products.types';
 
 @Component({
   selector: 'app-shopping-cart-details',
-  templateUrl: './shopping-cart-details.component.html',
-  styleUrls: ['./shopping-cart-details.component.scss']
+  template: `<app-shopping-cart-details-view [products]="cartItems$ | async" (onClickCheckoutButton)="checkout($event)"></app-shopping-cart-details-view>`
 })
 export class ShoppingCartDetailsComponent implements OnInit, OnDestroy {
-  cartItems!: Product[];
-  alive = true;
+  cartItems$ = this.store.select(selectOrderProducts);
+  currentUser$ = this.store.select(selectCurrentUser);
+  currentUser!: User | null;
+  constructor(private store: Store<AppState>) { }
 
-  constructor(private cartService: ShoppingCartService, private orderService: OrderService,
-    private location: Location) { }
+  active = true;
 
   ngOnInit() {
-    this.cartItems = this.cartService.getCartItems();
+    this.currentUser$.pipe(takeWhile(() => this.active)).subscribe(data => this.currentUser = data);
   }
 
   checkout(orderProducts: OrderProduct[]) {
-
-    const order: Order = {
-      customerId: "de96921d-2f8d-46e7-8061-31468180de96",
-      products: orderProducts.map((orderProduct) => ({
-        productId: orderProduct.product.id,
-        quantity: orderProduct.quantity,
-      })),
-    };
-
-    this.orderService.createOrder(order).pipe(
-      takeWhile(() => this.alive)
-    ).subscribe({
-      next: () => {
-        window.alert('Order placed');
-        this.cartService.clearCart();
-        this.location.back();
-      },
-      error: (error) => {
-        window.alert(error);
-      }
-    });
-  }
-
-  removeFromCart(productId: string) {
-    if (this.cartItems.some((item) => item.id === productId)) {
-      this.cartItems.splice(this.cartItems.findIndex((item) => item.id === productId), 1);
+    if (this.currentUser) {
+      const order: Order = {
+        customerId: this.currentUser.id,
+        products: orderProducts.map((orderProduct) => ({
+          productId: orderProduct.product.id,
+          quantity: orderProduct.quantity,
+        })),
+      };
+      this, this.store.dispatch(createOrder({ order }))
     }
+
   }
 
   ngOnDestroy(): void {
-    this.alive = false
+    this.active = false
   }
 }

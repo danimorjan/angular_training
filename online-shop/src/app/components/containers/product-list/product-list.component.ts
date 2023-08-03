@@ -1,25 +1,20 @@
-import { Component, OnDestroy } from '@angular/core';
-import { takeWhile } from 'rxjs';
-import { Product } from 'src/app/modules/shared/types/products.types';
-import { ProductsService } from 'src/app/services/products.service';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { getProducts } from 'src/app/modules/shared/state/actions/products.actions';
+import { selectAllProducts } from 'src/app/modules/shared/state/selectors/products.selectors';
+import { AppState } from 'src/app/modules/shared/state/state/app.state';
 
 @Component({
   selector: 'app-product-list',
-  template: `<app-product-list-view [products]="products"></app-product-list-view>`
+  template: `<app-product-list-view [products]="products$ | async"></app-product-list-view>`
 })
-export class ProductListComponent implements OnDestroy {
-  products: Product[] | undefined;
-  alive = true;
+export class ProductListComponent implements OnInit {
+  products$ = this.store.select(selectAllProducts);
 
-  constructor(private productService: ProductsService) {
-    this.productService.getProducts()
-    .pipe(takeWhile(() => this.alive))
-    .subscribe((products) => {
-      this.products = products;
-    });
+  constructor(private store: Store<AppState>) {
   }
 
-  ngOnDestroy() {
-    this.alive = false;
+  ngOnInit(): void {
+    this.store.dispatch(getProducts());
   }
 }

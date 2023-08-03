@@ -27,7 +27,7 @@ export class ProductsService {
     return this.http.put(`${environment.apiUrl}/products/${updatedProduct.id}`, updatedProduct);
   }
 
-  insertProduct(insertProduct: ProductInsert) {
-    return this.http.post(`${environment.apiUrl}/products`, insertProduct);
+  insertProduct(insertProduct: ProductInsert): Observable<Product> {
+    return this.http.post<Product>(`${environment.apiUrl}/products`, insertProduct);
   }
 }

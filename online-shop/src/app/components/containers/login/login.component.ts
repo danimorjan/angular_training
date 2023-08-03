@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { login } from 'src/app/modules/shared/state/actions/auth.actions';
+import { AppState } from 'src/app/modules/shared/state/state/app.state';
 import { Credentials } from 'src/app/modules/shared/types/products.types';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,22 +10,10 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private store: Store<AppState>) { }
 
   onLogin(credentials: Credentials) {
-    this.authService.login(credentials).subscribe({
-      next: (_) => {
-        alert("Welcome");
-        this.router.navigate(['/products']);
-      },
-      error: (error) => {
-        if (error.status === 404) {
-          alert("User not found. Please check your credentials.");
-        } else {
-          alert("Please try again later.");
-        }
-      }
-    });
+    this.store.dispatch(login({ credentials: credentials }));
   }
 
 

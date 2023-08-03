@@ -8,7 +8,7 @@ import { Product } from 'src/app/modules/shared/types/products.types';
   styleUrls: ['./product-details-view.component.scss']
 })
 export class ProductDetailsViewComponent {
-  @Input() product: Product | undefined;
+  @Input() product!: Product | null;
   @Output() onClickDeletekButton: EventEmitter<string> = new EventEmitter<string>();
   @Output() onClickBuyButton: EventEmitter<Product> = new EventEmitter<Product>();
 

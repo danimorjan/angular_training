@@ -1,30 +1,18 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Product } from '../../shared/types/products.types';
+import { environment } from 'src/environments/environment';
+import { Order, Product } from '../../shared/types/products.types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingCartService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   private items: Product[] = [];
 
-  addToCart(product: Product): Boolean {
-    if (this.items.includes(product)) {
-      return false;
-    }
-    else {
-      this.items.push(product);
-      return true
-    }
-  }
-
-  getCartItems(): Product[] {
-    return this.items;
-  }
-
-  clearCart() {
-    this.items = [];
+  createOrder(order: Order) {
+    return this.http.post(`${environment.apiUrl}/orders`, order, { responseType: 'text' });
   }
 }
