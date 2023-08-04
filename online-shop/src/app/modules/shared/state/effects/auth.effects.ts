@@ -1,16 +1,17 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { User } from '../../types/products.types';
+import { tokenKey } from '../../types/token-key.constant';
 import { login, loginFailure, loginSuccess, userInfo } from '../actions/auth.actions';
 
 @Injectable()
 export class AuthEffects {
-    constructor(private actions$: Actions, private authService: AuthService, private router: Router) { }
+    constructor(private actions$: Actions, private authService: AuthService, private navigationService: NavigationService) { }
 
     login$ = createEffect(() =>
         this.actions$.pipe(
@@ -18,7 +19,7 @@ export class AuthEffects {
             switchMap((props) =>
                 this.authService.login(props.credentials).pipe(
                     map((token) => {
-                        localStorage.setItem('token', token.access_token);
+                        localStorage.setItem(tokenKey, token.access_token);
                         return loginSuccess({ token });
                     }),
                     catchError((error: HttpErrorResponse) => of(loginFailure({ error: 'Invalid credentials. Please try again.' })))
@@ -45,7 +46,7 @@ export class AuthEffects {
                 ofType(userInfo),
                 tap((props) => {
                     alert("Welcome")
-                    this.router.navigate(['/products']);
+                    this.navigationService.navigateToLogin();
                 })
             ),
         { dispatch: false }

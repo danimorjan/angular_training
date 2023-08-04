@@ -8,14 +8,12 @@ export const shoppingCartReducer = createReducer(
     on(addToCart, (state, { product }) => {
         const productOrder = state.products.find(x => x.id === product.id);
         if (productOrder === undefined) {
-            alert("Product added to cart")
             return {
                 ...state,
                 products: [...state.products, product],
                 error: "",
             };
         } else {
-            alert("Product already in cart")
             return {
                 ...state
             };
@@ -24,7 +22,6 @@ export const shoppingCartReducer = createReducer(
 
     on(createOrder, (state) => ({
         ...state,
-        status: "loading",
     })),
 
     on(createOrderSuccess, (state) => ({

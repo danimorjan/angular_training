@@ -6,16 +6,16 @@
     border-radius: 5px;
 }
 
-.form-group {
+.form-field {
     margin-bottom: 20px;
 }
 
-label {
+.form-label {
     display: block;
     font-weight: bold;
 }
 
-input {
+.form-input {
     width: 100%;
     padding: 8px;
     font-size: 16px;
@@ -23,13 +23,13 @@ input {
     border-radius: 4px;
 }
 
-button:disabled {
+.submit-button:disabled {
     background-color: #e0e0e0;
     color: #bdbdbd;
     cursor: not-allowed;
 }
 
-button {
+.submit-button {
     padding: 10px 20px;
     font-size: 16px;
     background-color: #007bff;

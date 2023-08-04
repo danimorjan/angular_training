@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from 'src/app/modules/shared/types/products.types';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-product-list-view',
@@ -9,19 +9,9 @@ import { Product } from 'src/app/modules/shared/types/products.types';
 })
 export class ProductListViewComponent {
   @Input() products!: Product[] | null;
+  @Output() navigateToShoppingCartButton: EventEmitter<void> = new EventEmitter<void>();
+  @Output() navigateToAddButton: EventEmitter<void> = new EventEmitter<void>();
+  @Output() navigateToDetailsButton: EventEmitter<string> = new EventEmitter<string>();
+  @Output() logoutButton: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private router: Router) { }
-
-  navigateToShoppingCart(): void {
-    this.router.navigate(['/shopping-cart']);
-  }
-
-  navigateToAddProduct(): void {
-    this.router.navigate(['/add-product']);
-  }
-
-  logout() {
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
-  }
 }

@@ -7,19 +7,22 @@ import { ProductListComponent } from './components/containers/product-list/produ
 import { ProductsFormComponent } from './components/containers/products-form/products-form.component';
 import { authGuard } from './guards/auth.guard';
 import { ShoppingCartDetailsComponent } from './modules/shopping-cart/components/containers/shopping-cart-details/shopping-cart-details.component';
+import { AppPaths } from './services/navigation.service';
 
 const routes: Routes = [
-
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: AppPaths.ROOT, redirectTo: `/${AppPaths.LOGIN}`, pathMatch: 'full' },
   {
-    path: '', canActivate: [authGuard], children: [{ path: 'products', component: ProductListComponent },
-    { path: 'product/:id', component: ProductDetailsComponent },
-    { path: 'shopping-cart', component: ShoppingCartDetailsComponent },
-    { path: 'edit-product/:id', component: ProductsFormComponent },
-    { path: 'add-product', component: ProductAddComponent },]
+    path: AppPaths.ROOT,
+    canActivate: [authGuard],
+    children: [
+      { path: AppPaths.PRODUCTS, component: ProductListComponent },
+      { path: AppPaths.PRODUCT_DETAILS, component: ProductDetailsComponent },
+      { path: AppPaths.SHOPPING_CART, component: ShoppingCartDetailsComponent },
+      { path: AppPaths.EDIT_PRODUCT, component: ProductsFormComponent },
+      { path: AppPaths.ADD_PRODUCT, component: ProductAddComponent },
+    ],
   },
-  { path: 'login', component: LoginComponent }
-
+  { path: AppPaths.LOGIN, component: LoginComponent },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

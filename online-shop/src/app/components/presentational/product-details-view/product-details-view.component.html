@@ -7,7 +7,7 @@
         <div class="details-header">
             <button class="main-button" (click)="onClickBuyButton.emit(product)"> BUY
             </button>
-            <button class="main-button" (click)="navigateToEdit(product.id)"> EDIT
+            <button class="main-button" (click)="navigateToEditButton.emit(product.id)"> EDIT
             </button>
             <button class="main-button" id="deleteButton" (click)="onClickDeletekButton.emit(product.id)"> DELETE
             </button>
