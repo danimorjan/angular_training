@@ -40,8 +40,8 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.store.select(selectAdminRole).pipe(takeWhile(() => this.active)).subscribe(data => this.admin = data)
-    this.route.params.pipe(takeWhile(() => this.active)).subscribe((_) => {
-      const productId = this.route.snapshot.paramMap.get('id')!;
+    this.route.params.pipe(takeWhile(() => this.active)).subscribe((params) => {
+      const productId = params['id'];
       this.store.dispatch(getProduct({ productId: productId }));
     });
     this.selectedProduct$.pipe(takeWhile(() => this.active)).subscribe(data => {
