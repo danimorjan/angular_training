@@ -1,3 +1,8 @@
+
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
 <div class="table-header">
   <div>
     <h2>Product List</h2>
@@ -30,8 +35,8 @@
       <td>${{ product.price }}</td>
       <td>
         <div class="button-container">
-          <button class="arrow-button" (click)="navigateToDetailsButton.emit(product.id)">
-            <i class="arrow-icon"></i>
+          <button (click)="navigateToDetailsButton.emit(product.id)">
+            <mat-icon>arrow_forward</mat-icon>
           </button>
         </div>
       </td>

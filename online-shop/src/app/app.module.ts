@@ -29,6 +29,12 @@ import { productReducer } from './modules/shared/state/reducers/product.reducers
 import { productsReducer } from './modules/shared/state/reducers/products.reducers';
 import { shoppingCartReducer } from './modules/shared/state/reducers/shopping-cart.reducers';
 import { ShoppingCartModule } from './modules/shopping-cart/shopping-cart.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import {MatButtonModule} from '@angular/material/button';
+  
+
 
 @NgModule({
   declarations: [
@@ -49,6 +55,10 @@ import { ShoppingCartModule } from './modules/shopping-cart/shopping-cart.module
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatIconModule,
     ShoppingCartModule,
     StoreModule.forRoot({
       auth: authReducer,

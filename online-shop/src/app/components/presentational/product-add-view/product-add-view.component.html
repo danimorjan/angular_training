@@ -8,30 +8,39 @@
 
     <form [formGroup]="productForm" class="product-form">
         <div class="form-field">
-            <label class="form-label" for="name">Name:</label>
-            <input class="form-input" type="text" id="name" formControlName="name" />
+            <mat-label>Name:</mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput type="text" id="name" formControlName="name" />
+            </mat-form-field>
         </div>
         <div class="form-field">
-            <label class="form-label" for="category">Category:</label>
-            <input class="form-input" type="text" id="category" formControlName="category" />
+            <mat-label>Category:</mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput type="text" id="category" formControlName="category" />
+            </mat-form-field>
         </div>
         <div class="form-field">
-            <label class="form-label" for="image">Image URL:</label>
-            <input class="form-input" type="text" id="image" formControlName="image" />
+            <mat-label>Image URL:</mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput type="text" id="image" formControlName="image" />
+            </mat-form-field>
         </div>
         <div class="form-field">
-            <label class="form-label" for="price">Price:</label>
-            <input class="form-input" type="number" id="price" formControlName="price" min="1" />
+            <mat-label>Price:</mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput type="number" id="price" formControlName="price" min="1" />
+            </mat-form-field>
         </div>
         <div class="form-field">
-            <label class="form-label" for="description">Description:</label>
-            <textarea class="form-input" id="description" formControlName="description"></textarea>
+            <mat-label>Description:</mat-label>
+            <mat-form-field appearance="outline">
+                <textarea matInput id="description" formControlName="description"></textarea>
+            </mat-form-field>
         </div>
 
         <div class="buttons-container">
-            <button type="button" (click)="cancel.emit()" class="btn btn-secondary">Cancel</button>
-            <button type="button" (click)="this.insertProduct.emit()" [disabled]="!productForm.valid"
-                class="btn btn-primary">Save</button>
+            <button mat-button color="warn" (click)="cancel.emit()">Cancel</button>
+            <button mat-button color="primary" (click)="this.insertProduct.emit()" [disabled]="!productForm.valid">Save</button>
         </div>
     </form>
 
